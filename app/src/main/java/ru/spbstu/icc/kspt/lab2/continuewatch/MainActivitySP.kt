@@ -10,15 +10,17 @@ class MainActivitySP : AppCompatActivity() {
     private lateinit var textSecondsElapsed: TextView
     private var secondsElapsed: Int = 0
     private lateinit var sharedPref: SharedPreferences
+    @Volatile
     private var stopIt = false
 
     private val backgroundThread = Thread {
         while (true) {
             if (!stopIt) {
-                Thread.sleep(1000)
                 textSecondsElapsed.post {
-                    textSecondsElapsed.text = "Seconds elapsed: ${secondsElapsed++}"
+                    textSecondsElapsed.text = "Seconds elapsed: $secondsElapsed"
                 }
+                Thread.sleep(1000)
+                secondsElapsed++
             }
         }
     }
